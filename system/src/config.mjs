@@ -882,6 +882,15 @@ FALLOUT.WEAPON_MOD_TYPES = {
 	stock: "FALLOUT.WEAPON_MOD.type.stock",
 };
 
+FALLOUT.DIFFICULTY = {
+	dificulty_0: 0,
+	dificulty_1: 1,
+	dificulty_2: 2,
+	dificulty_3: 3,
+	dificulty_4: 4,
+	dificulty_5: 5,
+};
+
 
 export async function discoverAvailableAmmoTypes() {
 	const ammo = await fallout.compendiums.ammo();

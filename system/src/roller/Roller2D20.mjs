@@ -56,6 +56,7 @@ export class Roller2D20 {
 			roll: roll,
 			rollname: rollname,
 			successTreshold,
+			difficulty,
 		});
 		return {roll: roll, dicesRolled: dicesRolled};
 	}
@@ -72,6 +73,7 @@ export class Roller2D20 {
 		roll = null,
 		rollname = "Roll xD20",
 		successTreshold = 0,
+		difficulty = 0,
 	}={}) {
 		let i = 0;
 		roll.dice.forEach(d => {
@@ -129,6 +131,7 @@ export class Roller2D20 {
 			roll: roll,
 			rollname: rollname,
 			successTreshold: successTreshold,
+			difficulty: difficulty,
 		});
 		return dicesRolled;
 	}
@@ -178,10 +181,11 @@ export class Roller2D20 {
 		roll = null,
 		rollname = "Roll xD20",
 		successTreshold = 0,
+		difficulty = 0,
 	}={}) {
 		let successesNum = Roller2D20.getNumOfSuccesses(dicesRolled);
 		let complicationsNum = Roller2D20.getNumOfComplications(dicesRolled);
-
+		let testResults = (difficulty <= successesNum);
 		let rollData = {
 			actor: actor,
 			complications: complicationsNum,
@@ -192,6 +196,7 @@ export class Roller2D20 {
 			rollname,
 			successes: successesNum,
 			successTreshold,
+			testResults,
 		};
 
 		const html = await foundry.applications.handlebars.renderTemplate("systems/fallout/templates/chat/roll2d20.hbs", rollData);
