@@ -165,10 +165,27 @@ export class Dialog2d20 extends foundry.applications.api.ApplicationV2 {
 		const target = event.target;
 		const dialogHTML = target.offsetParent;
 		const markedDice = dialogHTML.querySelector(".dice-icon.d20.marked");
-		const actionType = target.dataset.type;
+		const freeD20 = dialogHTML.querySelector("#freeD20").checked;
+		let actionType = target.dataset.type;
+		let diceCost = 0;
+		if (freeD20 ) {
+			diceCost = -1;
+			if (actionType === undefined) {
+				actionType = "add";
+			}
+		}
+		else if (actionType === undefined) {
+			actionType = "remove";
+		}
 		let numberOfDice;
-		if (actionType === "add") {
-			numberOfDice = Number(markedDice.dataset.index) + 1;
+		if (actionType === "add" ) {
+			if (freeD20 && markedDice.dataset.index === "5") {
+				numberOfDice = 5;
+			}
+			else {
+				numberOfDice = Number(markedDice.dataset.index) + 1;
+			}
+
 		}
 		else if (actionType === "remove") {
 			numberOfDice = Number(markedDice.dataset.index) - 1;
@@ -185,7 +202,7 @@ export class Dialog2d20 extends foundry.applications.api.ApplicationV2 {
 			const partyAP = dialogHTML.querySelector("#partyAP");
 			const avaliablePartyAP = game.settings.get(SYSTEM_ID, "partyAP");
 			let spendAP = 0;
-			switch (numberOfDice) {
+			switch (numberOfDice + diceCost) {
 				case 3:
 					spendAP = 1;
 					break;
