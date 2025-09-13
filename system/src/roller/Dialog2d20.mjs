@@ -84,7 +84,7 @@ export class Dialog2d20 extends foundry.applications.api.ApplicationV2 {
 		const complication = html.querySelector('[name="complication"]')?.value;
 		const isTag = html.querySelector('[name="tag"]')?.checked;
 		const difficultySelect = html.querySelector('[name="dificulty"]');
-		const dificulty = Number(difficultySelect.options[difficultySelect.selectedIndex].text);
+		const difficulty = Number(difficultySelect.options[difficultySelect.selectedIndex].text);
 		const diceNum = html.querySelector(".dice-icon.d20.marked").dataset.index;
 		this.rolling = true;
 
@@ -98,7 +98,7 @@ export class Dialog2d20 extends foundry.applications.api.ApplicationV2 {
 			rollLocation: this.rollLocation,
 			item: this.item,
 			actor: this.actor,
-			dificulty: dificulty,
+			difficulty: difficulty,
 		});
 
 		this.deferred.resolve(result);
@@ -223,7 +223,7 @@ export class Dialog2d20 extends foundry.applications.api.ApplicationV2 {
 				if (existBuyAP !== null) {
 					existBuyAP.remove();
 				}
-				const buyAPFromOverseer = `<p id="buyedAP" data-buyed = ${buyedAP}>${game.i18n.localize("FALLOUT.TEMPLATE.BUY_FROM_OVERSEER")}:${buyedAP}</p>`;
+				const buyAPFromOverseer = `<p id="buyedAP" data-buyed = ${buyedAP}>${game.i18n.localize("FALLOUT.TEMPLATE.BUY_FROM_OVERSEER")}:   ${buyedAP}</p>`;
 				partyAP.insertAdjacentHTML("afterend", buyAPFromOverseer);
 			}
 			else {

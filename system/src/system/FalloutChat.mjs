@@ -1,3 +1,4 @@
+import {APTracker} from "../apps/APTracker.mjs";
 export default class FalloutChat {
 
 	static async _renderChatMessage(
@@ -99,6 +100,7 @@ export default class FalloutChat {
 						rerollIndexes: rerollIndex,
 						rollname: falloutRoll.rollname,
 						successTreshold: falloutRoll.successTreshold,
+						difficulty: falloutRoll.difficulty,
 					});
 				}
 				else if (falloutRoll.diceFace === "d6") {
@@ -149,6 +151,23 @@ export default class FalloutChat {
 					weapon: weapon,
 					actor: actor,
 				});
+			});
+		});
+
+		html.querySelectorAll(".addPartyAP-button").forEach(element => {
+			element.addEventListener("click", async event => {
+				let falloutRoll = message.flags.falloutroll;
+				const currentPartyAP =  game.settings.get(SYSTEM_ID, "partyAP");
+				const newPartyAP = currentPartyAP + falloutRoll.leftSucess;
+				APTracker.setAP("partyAP", newPartyAP);
+				const chatData = {
+					user: game.user.id,
+					rollMode: game.settings.get("core", "rollMode"),
+					content: `<h4> ${falloutRoll.leftSucess} ${game.i18n.localize("FALLOUT.CHAT_MESSAGE.AP_WAS_ADDED")}`,
+				};
+				falloutRoll.leftSucess = 0;
+				element.remove();
+				await ChatMessage.create(chatData);
 			});
 		});
 	}

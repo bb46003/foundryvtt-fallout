@@ -47,51 +47,42 @@
 			>
 		</div>
 	</div>
-	<div class="flexrow" style="align-items: unset">
+
+	<div class="flexrow unset-align">
 		<div class="resource flexcolumn flex-group-left">
 			<h4>{{localize "FALLOUT.TEMPLATES.BUY_FROM_PARTY_AP"}}</h4>
 			<p id="partyAP">{{localize "FALLOUT.TEMPLATE.AVALIABLE_PARTY_AP"}}:   {{partyAP}}</p>
-			<p>{{localize "FALLOUT.TEMPLATE.FREED20"}} <input type="checkbox" id="freeD20" data-action="modifyNumberOfDice"></p>
-			<div class="dicemodifiers" style=" display: flex; flex-direction: row; justify-content: space-around;">
-				<a class="ap-btn ap-sub" data-action="modifyNumberOfDice" data-type = "remove">- {{localize "FALLOUT.TEMPLATES.REMOVE_DICE"}}</a>
-            	<a class="ap-btn ap-add"  data-action="modifyNumberOfDice" data-type = "add">+{{localize "FALLOUT.TEMPLATES.ADD_DICE"}}</a>
+			<p>
+				{{localize "FALLOUT.TEMPLATE.FREED20"}}
+				<input type="checkbox" id="freeD20" data-action="modifyNumberOfDice">
+			</p>
+			<div class="dicemodifiers">
+				<a class="ap-btn ap-sub" data-action="modifyNumberOfDice" data-type="remove">
+					- {{localize "FALLOUT.TEMPLATES.REMOVE_DICE"}}
+				</a>
+            	<a class="ap-btn ap-add" data-action="modifyNumberOfDice" data-type="add">
+					+{{localize "FALLOUT.TEMPLATES.ADD_DICE"}}
+				</a>
 			</div>
 		</div>
+
 		<div class="resource flexcolumn">
 			<h4>{{localize "FALLOUT.TEMPLATES.DIFICULTY_LEVEL"}}</h4>
-			<select name="dificulty" style="text-align: center; --input-text-color: black;">
-                    {{selectOptions dificulty localize=true}}
+			<select name="dificulty" class="difficulty-select">
+                {{selectOptions dificulty localize=true}}
             </select>
 		</div>
 	</div>
+
 	<ul class="flexrow">
-		<li>
-			<a class="dice-icon d20" data-index="1" data-action="modifyNumberOfDice"  data-type = "dice">
-				1
-			</a>
-		</li>
-		<li>
-			<a class="dice-icon d20 marked" data-index="2" data-action="modifyNumberOfDice" data-type = "dice">
-				2
-			</a>
-		</li>
-		<li>
-			<a class="dice-icon d20" data-index="3" data-action="modifyNumberOfDice" data-type = "dice">
-				3
-			</a>
-		</li>
-		<li>
-			<a class="dice-icon d20" data-index="4" data-action="modifyNumberOfDice" data-type = "dice">
-				4
-			</a>
-		</li>
-		<li>
-			<a class="dice-icon d20" data-index="5" data-action="modifyNumberOfDice" data-type = "dice">
-				5
-			</a>
-		</li>
+		<li><a class="dice-icon d20" data-index="1" data-action="modifyNumberOfDice" data-type="dice">1</a></li>
+		<li><a class="dice-icon d20 marked" data-index="2" data-action="modifyNumberOfDice" data-type="dice">2</a></li>
+		<li><a class="dice-icon d20" data-index="3" data-action="modifyNumberOfDice" data-type="dice">3</a></li>
+		<li><a class="dice-icon d20" data-index="4" data-action="modifyNumberOfDice" data-type="dice">4</a></li>
+		<li><a class="dice-icon d20" data-index="5" data-action="modifyNumberOfDice" data-type="dice">5</a></li>
 	</ul>
 </div>
+
 <footer class="dialog-footer">
-  <button type="button" data-action="roll" style="width:100%">{{localize "FALLOUT.UI.ROLL"}}</button>
+  <button type="button" data-action="roll" class="roll-btn">{{localize "FALLOUT.UI.ROLL"}}</button>
 </footer>

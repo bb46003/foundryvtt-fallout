@@ -3,9 +3,9 @@
 		<h2>{{rollname}}</h2>
 		<p>
 			{{#if testResults}}
-				{{localize "FALLOUT.CHAT.TEST_RESULTS_SUCESS"}}
+				{{localize "FALLOUT.TEMPLATES.TEST_RESULTS_SUCESS"}} - {{localize "FALLOUT.TEMPLATES.DIFICULTY_LEVEL_CHAT"}} {{difficulty}}
 			{{else}}
-				{{localize "FALLOUT.CHAT.TEST_RESULTS_FAILL"}}
+				{{localize "FALLOUT.TEMPLATES.TEST_RESULTS_FAILL"}} - {{localize "FALLOUT.TEMPLATES.DIFICULTY_LEVEL_CHAT"}} {{difficulty}}
 			{{/if}}
 		</p>
 		<p class="success-plaq">
@@ -82,5 +82,10 @@
 		{{/if}}
 
 		<button class="reroll-button">{{localize "FALLOUT.TEMPLATES.Re_roll"}}</button>
+		{{#if testResults}}
+			{{#ifCond leftSucess ">" 0}}
+			<button class="addPartyAP-button">{{localize "FALLOUT.TEMPLATES.ADD_REMAINING_PARTY_AP"}}</button>
+			{{/ifCond}}
+		{{/if}}
 	</div>
 </div>

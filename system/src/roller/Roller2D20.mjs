@@ -118,7 +118,6 @@ export class Roller2D20 {
 				}
 			});
 		});
-
 		await Roller2D20.sendToChat({
 			actor: actor,
 			complicationTreshold: complicationTreshold,
@@ -144,6 +143,7 @@ export class Roller2D20 {
 		roll = null,
 		rollname = "Roll xD20",
 		successTreshold = 0,
+		difficulty = 0,
 	}={}) {
 		if (!rerollIndexes.length) {
 			ui.notifications.notify("Select Dice you want to Reroll");
@@ -153,9 +153,8 @@ export class Roller2D20 {
 		let numOfDice = rerollIndexes.length;
 		let formula = `${numOfDice}d20`;
 		let _roll = new Roll(formula);
-
 		await _roll.evaluate();
-
+		console.log(difficulty);
 		this.showDiceSoNice(_roll);
 
 		await Roller2D20.parseD20Roll({
@@ -166,6 +165,7 @@ export class Roller2D20 {
 			complicationTreshold: complicationTreshold,
 			dicesRolled: dicesRolled,
 			rerollIndexes: rerollIndexes,
+			difficulty: difficulty,
 		});
 	}
 
@@ -185,7 +185,9 @@ export class Roller2D20 {
 	}={}) {
 		let successesNum = Roller2D20.getNumOfSuccesses(dicesRolled);
 		let complicationsNum = Roller2D20.getNumOfComplications(dicesRolled);
+
 		let testResults = (difficulty <= successesNum);
+		let leftSucess = successesNum - difficulty;
 		let rollData = {
 			actor: actor,
 			complications: complicationsNum,
@@ -197,6 +199,8 @@ export class Roller2D20 {
 			successes: successesNum,
 			successTreshold,
 			testResults,
+			leftSucess,
+			difficulty,
 		};
 
 		const html = await foundry.applications.handlebars.renderTemplate("systems/fallout/templates/chat/roll2d20.hbs", rollData);
@@ -211,6 +215,8 @@ export class Roller2D20 {
 		falloutRoll.rerollIndexes = rerollIndexes;
 		falloutRoll.rollname = rollname;
 		falloutRoll.successTreshold = successTreshold;
+		falloutRoll.difficulty = difficulty;
+		falloutRoll.leftSucess = leftSucess;
 
 		let chatData = {
 			content: html,
