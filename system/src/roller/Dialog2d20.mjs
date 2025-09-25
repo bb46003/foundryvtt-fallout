@@ -6,6 +6,7 @@ export class Dialog2d20 extends foundry.applications.api.ApplicationV2 {
 		template: "systems/fallout/templates/dialogs/dialog2d20.hbs",
 		actions: {
 			modifyNumberOfDice: Dialog2d20.#modifyNumberOfDice,
+			dialogTypeAP: Dialog2d20.#dialogTypeAP,
 			roll: Dialog2d20.#rollButton,
 		},
 	};
@@ -49,6 +50,8 @@ export class Dialog2d20 extends foundry.applications.api.ApplicationV2 {
 				item: this.item,
 				dificulty: CONFIG.FALLOUT.DIFFICULTY,
 				partyAP: game.settings.get(SYSTEM_ID, "partyAP"),
+				isGM: game.user.isGM,
+				gmAP: game.settings.get(SYSTEM_ID, "gmAP"),
 			};
 		}
 		catch(e) {
@@ -252,6 +255,41 @@ export class Dialog2d20 extends foundry.applications.api.ApplicationV2 {
 		else {
 			ui.notifications.warn(game.i18n.localize("FALLOUT.UI.MAXIMUM_NUMBER_OF_DICE"));
 		}
+	}
+
+	static async #dialogTypeAP(event) {
+		const dialog = new foundry.applications.api.DialogV2({
+			window: { title: game.i18n.localize("FALLOUT.dialog.choiseAPToSpend") },
+			content: `
+      <div>${game.i18n.localize("FALLOUT.dialog.whichAPYouWantToSpend")}</div>
+      <div>
+        <input type="radio" id="partyAP" name="apChoice" value="party">
+        <label for="partyAP">${game.i18n.localize("FALLOUT.dialog.spendPartyAP")}</label>
+        <br>
+        <input type="radio" id="gmAP" name="apChoice" value="gmAP">
+        <label for="gmAP">${game.i18n.localize("FALLOUT.dialog.spendGmAP")}</label>
+      </div>
+    `,
+			buttons: [
+				{
+					label: "OK",
+					action: "apply",
+				},
+			],
+			submit: (result, dialog) => {
+				const choice = dialog.element.querySelector("input[name='apChoice']:checked");
+				if (choice) {
+					this.modifyNumberOfDiceGM(choice.value);
+				}
+			},
+		});
+
+		dialog.render(true);
+	}
+
+	async modifyNumberOfDiceGM(apToSpend) {
+		console.log("AP to spend:", apToSpend);
+		// your logic here
 	}
 }
 

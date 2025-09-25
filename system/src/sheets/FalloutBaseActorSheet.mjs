@@ -553,6 +553,7 @@ export default class FalloutBaseActorSheet
 			skill: rank,
 			tag: tag,
 			complication: parseInt(this.actor.system.complication),
+			actor: this.actor,
 		});
 	}
 

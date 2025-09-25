@@ -41,29 +41,34 @@
 			</p>
 			<input
 				data-dtype="Number"
-				name="complication"
+				name="complicaction"
 				type="number"
-				value="{{complication}}"
+				value="{{complicaction}}"
 			>
 		</div>
 	</div>
 
 	<div class="flexrow unset-align">
-		<div class="resource flexcolumn flex-group-left">
+		<div class="resource flexcolumn flex-group-left {{#if isGM}}gm{{/if}}">
 			<h4>{{localize "FALLOUT.TEMPLATES.BUY_FROM_PARTY_AP"}}</h4>
 			<p id="partyAP">{{localize "FALLOUT.TEMPLATE.AVALIABLE_PARTY_AP"}}:   {{partyAP}}</p>
+			{{#if isGM}}
+				<h4>{{localize "FALLOUT.TEMPLATES.BUY_FROM_GM_AP"}}</h4>
+				<p id="partyAP">{{localize "FALLOUT.TEMPLATE.AVALIABLE_GM_AP"}}:   {{gmAP}}</p>
+			{{/if}}
 			<p>
 				{{localize "FALLOUT.TEMPLATE.FREED20"}}
 				<input type="checkbox" id="freeD20" data-action="modifyNumberOfDice">
 			</p>
 			<div class="dicemodifiers">
-				<a class="ap-btn ap-sub" data-action="modifyNumberOfDice" data-type="remove">
+				<a class="ap-btn ap-sub" {{#if isGM}}data-action="dialogTypeAP"{{else}}data-action="modifyNumberOfDice"{{/if}} data-type="remove">
 					- {{localize "FALLOUT.TEMPLATES.REMOVE_DICE"}}
 				</a>
-            	<a class="ap-btn ap-add" data-action="modifyNumberOfDice" data-type="add">
+            	<a class="ap-btn ap-add" {{#if isGM}}data-action="dialogTypeAP"{{else}}data-action="modifyNumberOfDice"{{/if}} data-type="add">
 					+{{localize "FALLOUT.TEMPLATES.ADD_DICE"}}
 				</a>
 			</div>
+
 		</div>
 
 		<div class="resource flexcolumn">
@@ -75,11 +80,11 @@
 	</div>
 
 	<ul class="flexrow">
-		<li><a class="dice-icon d20" data-index="1" data-action="modifyNumberOfDice" data-type="dice">1</a></li>
-		<li><a class="dice-icon d20 marked" data-index="2" data-action="modifyNumberOfDice" data-type="dice">2</a></li>
-		<li><a class="dice-icon d20" data-index="3" data-action="modifyNumberOfDice" data-type="dice">3</a></li>
-		<li><a class="dice-icon d20" data-index="4" data-action="modifyNumberOfDice" data-type="dice">4</a></li>
-		<li><a class="dice-icon d20" data-index="5" data-action="modifyNumberOfDice" data-type="dice">5</a></li>
+		<li><a class="dice-icon d20" data-index="1" {{#if isGM}}data-action="dialogTypeAP"{{else}}data-action="modifyNumberOfDice"{{/if}} data-type="dice">1</a></li>
+		<li><a class="dice-icon d20 marked" data-index="2" {{#if isGM}}data-action="dialogTypeAP"{{else}}data-action="modifyNumberOfDice"{{/if}} data-type="dice">2</a></li>
+		<li><a class="dice-icon d20" data-index="3" {{#if isGM}}data-action="dialogTypeAP"{{else}}data-action="modifyNumberOfDice"{{/if}} data-type="dice">3</a></li>
+		<li><a class="dice-icon d20" data-index="4" {{#if isGM}}data-action="dialogTypeAP"{{else}}data-action="modifyNumberOfDice"{{/if}} data-type="dice">4</a></li>
+		<li><a class="dice-icon d20" data-index="5" {{#if isGM}}data-action="dialogTypeAP"{{else}}data-action="modifyNumberOfDice"{{/if}} data-type="dice">5</a></li>
 	</ul>
 </div>
 
