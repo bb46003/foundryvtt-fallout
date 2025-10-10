@@ -38,6 +38,15 @@ export class Dialog2d20 extends foundry.applications.api.ApplicationV2 {
 
 	async getData() {
 		try {
+			const isCurrentUserGm = game.user.isGM;
+			const nonGmOwnerExists = game.users.some(user => {
+				if (user.isGM) {
+					return false;
+				}
+				const level = this.actor.ownership[user.id] ?? 0;
+				return level >= CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER;
+			});
+			const isGmButActorOwnedByOthers = isCurrentUserGm && nonGmOwnerExists;
 			return {
 				rollName: this.rollName,
 				diceNum: this.diceNum,
@@ -50,7 +59,9 @@ export class Dialog2d20 extends foundry.applications.api.ApplicationV2 {
 				item: this.item,
 				dificulty: CONFIG.FALLOUT.DIFFICULTY,
 				partyAP: game.settings.get(SYSTEM_ID, "partyAP"),
-				isGM: game.user.isGM,
+				apDialog: isGmButActorOwnedByOthers,
+				isGM: isCurrentUserGm,
+				isParty: nonGmOwnerExists,
 				gmAP: game.settings.get(SYSTEM_ID, "gmAP"),
 			};
 		}
